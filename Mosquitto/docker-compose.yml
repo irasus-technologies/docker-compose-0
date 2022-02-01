@@ -4,9 +4,9 @@ networks:
 
     khyber:
 
-        external: false
+        external: true
 
-        driver: bridge
+        # driver: bridge
 
 volumes:
 
