@@ -1,0 +1,67 @@
+version: "3"
+
+networks:
+
+    khyber:
+
+        external: true
+
+        # driver: bridge
+
+services:
+
+    mariadb:
+
+        restart: unless-stopped
+
+        networks:
+            - khyber
+
+        container_name: mariadb
+
+        volumes:
+            - "/tmp/mysql:/config"
+
+        image: mariadb:10.3.32
+
+        environment:
+            - TZ=Asia/Kolkata
+            - MYSQL_ROOT_PASSWORD=test123
+            - MYSQL_USER=snipe
+            - MYSQL_PASSWORD=test123
+            - MYSQL_DATABASE=snipe
+
+    snipe-it:
+
+        restart: unless-stopped
+
+        networks:
+            - khyber
+
+        ports:
+            - "8084:80"
+
+        container_name: snipe-it
+
+        volumes:
+            - "/tmp/snipeit:/config"
+
+        image: linuxserver/snipe-it:latest
+        # image: snipe/snipe-it:v5.3.8
+
+        environment:
+            - NGINX_APP_URL=127.0.0.1:8084
+            - MYSQL_PORT_3306_TCP_ADDR=mariadb
+            - MYSQL_PORT_3306_TCP_PORT=3306
+            - MYSQL_DATABASE=snipe
+            - MYSQL_USER=snipe
+            - MYSQL_PASSWORD=test123
+            - APP_ENV=production
+            - APP_DEBUG=false
+            - APP_KEY=base64:<later>
+            - APP_URL=http://127.0.0.1:8084
+            - APP_TIMEZONE=Asia/Kolkata
+            - APP_LOCALE=en
+
+        depends_on:
+            - mariadb
