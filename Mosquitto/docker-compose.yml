@@ -1,0 +1,36 @@
+version: "3"
+
+networks:
+
+    khyber:
+
+        external: false
+
+        driver: bridge
+
+volumes:
+
+    mosquitto:
+
+        external: true
+
+services:
+
+    mosquitto:
+
+        restart: unless-stopped
+
+        # network_mode: host
+
+        networks:
+            - khyber
+
+        ports:
+            - "1883:1883"
+
+        container_name: mosquitto
+
+        volumes:
+            - "mosquitto:/mosquitto/"
+
+        image: eclipse-mosquitto
