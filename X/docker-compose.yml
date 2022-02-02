@@ -10,6 +10,10 @@ networks:
 
 volumes:
 
+    postgresql:
+
+        external: true
+
     node-red:
 
         external: true
@@ -19,6 +23,47 @@ volumes:
         external: true
 
 services:
+
+    traccar:
+
+        restart: unless-stopped
+
+        networks:
+            - khyber
+
+        ports:
+            - "8082:8082"
+            - "5055:5055"
+            - "5179:5179"
+
+        container_name: traccar
+
+        volumes:
+            - ./traccar.xml:/opt/traccar/conf/traccar.xml
+
+        image: irasus_traccar
+
+        depends_on:
+            - postgresql
+
+    postgresql:
+
+        restart: unless-stopped
+
+        # network_mode: host
+
+        networks:
+            - khyber
+
+        container_name: postgresql
+
+        volumes:
+            - "postgresql:/var/lib/postgresql/data"
+
+        image: postgres:12
+
+        env_file:
+            - postgresql.env
 
     mosquitto:
 
@@ -59,5 +104,5 @@ services:
         image: nodered/node-red:2.2.0
 
         depends_on:
-            # - postgresql
+            - postgresql
             - mosquitto
