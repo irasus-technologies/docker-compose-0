@@ -39,7 +39,7 @@ services:
         container_name: traccar
 
         volumes:
-            - ./traccar.xml:/opt/traccar/conf/traccar.xml
+            - "./traccar.xml:/opt/traccar/conf/traccar.xml"
 
         image: irasus_traccar
 
