@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+
+    node-red:
+
+        image: nodered/node-red:latest
+
+        environment:
+            - TZ=Asia/Kolkata
+
+        ports:
+            - "1880:1880"
