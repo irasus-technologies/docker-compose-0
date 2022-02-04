@@ -19,7 +19,7 @@
     -->
 
     <entry key='database.driver'>org.postgresql.Driver</entry>
-    <entry key='database.url'>jdbc:postgresql://postgresql:5432/traccar?currentSchema=traccar</entry>
+    <entry key='database.url'>jdbc:postgresql://timescaledb:5432/traccar?currentSchema=traccar</entry>
     <entry key='database.user'>postgres</entry>
     <entry key='database.password'>btuni8ti8b</entry>
 

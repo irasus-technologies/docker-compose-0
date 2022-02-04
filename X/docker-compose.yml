@@ -10,7 +10,7 @@ networks:
 
 volumes:
 
-    postgresql:
+    timescaledb:
 
         external: true
 
@@ -44,9 +44,9 @@ services:
         image: irasus_traccar
 
         depends_on:
-            - postgresql
+            - timescaledb
 
-    postgresql:
+    timescaledb:
 
         restart: unless-stopped
 
@@ -55,15 +55,15 @@ services:
         networks:
             - khyber
 
-        container_name: postgresql
+        container_name: timescaledb
 
         volumes:
-            - "postgresql:/var/lib/postgresql/data"
+            - "timescaledb:/var/lib/postgresql/data"
 
-        image: postgres:12
+        image: timescale/timescaledb:2.5.1-pg13
 
         env_file:
-            - postgresql.env
+            - timescaledb.env
 
     mosquitto:
 
@@ -104,5 +104,5 @@ services:
         image: nodered/node-red:2.2.0
 
         depends_on:
-            - postgresql
+            - timescaledb
             - mosquitto
