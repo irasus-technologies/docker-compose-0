@@ -24,6 +24,46 @@ volumes:
 
 services:
 
+    postgrest:
+
+        restart: unless-stopped
+
+        networks:
+            - khyber
+
+        ports:
+            - "3000:3000"
+
+        container_name: postgrest
+
+        image: postgrest/postgrest:v9.0.0
+
+        depends_on:
+            - timescaledb
+
+        env_file:
+            - postgrest.env
+
+    flyway:
+
+        restart: on-failure
+
+        networks:
+            - khyber
+
+        container_name: flyway
+
+        command: migrate
+
+        volumes:
+            - "./flyway/sql:/flyway/sql"
+            - "./flyway/conf:/flyway/conf"
+
+        image: flyway/flyway:8.4.4-alpine
+
+        depends_on:
+            - timescaledb
+
     traccar:
 
         restart: unless-stopped
@@ -44,7 +84,7 @@ services:
         image: irasus_traccar
 
         depends_on:
-            - timescaledb
+            - flyway
 
     timescaledb:
 
