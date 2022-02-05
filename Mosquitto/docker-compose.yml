@@ -33,4 +33,4 @@ services:
         volumes:
             - "mosquitto:/mosquitto/"
 
-        image: eclipse-mosquitto
+        image: eclipse-mosquitto:2.0.14
