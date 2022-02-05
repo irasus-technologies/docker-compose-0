@@ -3,4 +3,5 @@ docker volume create -d local-persist -o mountpoint=/home/anirudh/Data/Docker/no
 docker volume create -d local-persist -o mountpoint=/home/anirudh/Data/Docker/snipe-it --name=snipe-it
 docker volume create -d local-persist -o mountpoint=/home/anirudh/Data/Docker/postgresql --name=postgresql
 docker volume create -d local-persist -o mountpoint=/home/anirudh/Data/Docker/timescaledb --name=timescaledb
+docker volume create -d local-persist -o mountpoint=/home/anirudh/Data/Docker/grafana --name=grafana
 
