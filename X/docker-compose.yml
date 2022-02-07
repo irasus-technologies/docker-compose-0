@@ -10,6 +10,10 @@ networks:
 
 volumes:
 
+    # grafana:
+
+        # external: true
+
     timescaledb:
 
         external: true
@@ -81,7 +85,7 @@ services:
         volumes:
             - "./traccar.xml:/opt/traccar/conf/traccar.xml"
 
-        image: irasus_traccar
+        image: irasus/traccar:22.02
 
         depends_on:
             - flyway
@@ -91,6 +95,9 @@ services:
         restart: unless-stopped
 
         # network_mode: host
+
+        # ports:
+            # - "5432:5432"
 
         networks:
             - khyber
@@ -142,6 +149,9 @@ services:
             - "node-red:/data"
 
         image: nodered/node-red:2.2.0
+
+        environment:
+            - TZ=Asia/Kolkata
 
         depends_on:
             - timescaledb
