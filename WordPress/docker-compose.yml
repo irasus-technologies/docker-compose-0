@@ -1,0 +1,58 @@
+version: "3"
+
+networks:
+
+    khyber:
+
+        external: false
+
+        driver: bridge
+
+services:
+
+    mysql:
+
+        restart: unless-stopped
+
+        networks:
+            - khyber
+
+        container_name: mysql
+
+        volumes:
+            - "/tmp/mysql:/config"
+
+        image: mysql:5.7
+
+        environment:
+            # - TZ=Asia/Kolkata
+            - MYSQL_ROOT_PASSWORD=test123
+            - MYSQL_USER=wordpress
+            - MYSQL_PASSWORD=test123
+            - MYSQL_DATABASE=wordpress
+
+    wordpress:
+
+        restart: unless-stopped
+
+        networks:
+            - khyber
+
+        ports:
+            - "8000:80"
+
+        container_name: wordpress
+
+        volumes:
+            - "/tmp/wordpress:/var/www/html"
+
+        image: wordpress:latest
+
+        environment:
+            - WORDPRESS_DB_HOST=mysql
+            - WORDPRESS_DB_USER=wordpress
+            - WORDPRESS_DB_PASSWORD=test123
+            - WORDPRESS_DB_NAME=wordpress
+
+        depends_on:
+            - mysql
