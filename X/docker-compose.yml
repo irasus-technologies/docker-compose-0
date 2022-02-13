@@ -148,7 +148,8 @@ services:
         volumes:
             - "node-red:/data"
 
-        image: nodered/node-red:2.2.0
+        # image: nodered/node-red:2.2.0
+        image: irasus/node-red:22.02
 
         environment:
             - TZ=Asia/Kolkata
