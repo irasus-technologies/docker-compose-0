@@ -2,7 +2,24 @@ version: "3"
 
 services:
 
-    web:
+    odoo-postgresql:
+
+        restart: unless-stopped
+
+        # networks:
+            # - khyber
+
+        container_name: odoo-postgresql
+
+        volumes:
+            - "odoo-postgresql:/var/lib/postgresql/data"
+
+        image: postgres:12
+
+        env_file:
+            - postgresql.env
+
+    odoo:
 
         restart: unless-stopped
 
@@ -10,45 +27,20 @@ services:
             - "8069:8069"
 
         volumes:
-            - "odoo-web-data:/var/lib/odoo"
+            - "odoo:/var/lib/odoo"
             - "./config:/etc/odoo"
             - "./addons:/mnt/extra-addons"
 
         image: odoo:14.0
 
-        environment:
-            - PASSWORD_FILE=/run/secrets/postgresql_password
-
-        secrets:
-            - postgresql_password
+        env_file:
+            - odoo.env
 
         depends_on:
-            - db
-
-    db:
-
-        volumes:
-            - "odoo-db-data:/var/lib/postgresql/data/pgdata"
-
-        image: postgres:13
-
-        environment:
-            - POSTGRES_DB=postgres
-            - POSTGRES_PASSWORD_FILE=/run/secrets/postgresql_password
-            - POSTGRES_USER=odoo
-            - PGDATA=/var/lib/postgresql/data/pgdata
-
-        secrets:
-            - postgresql_password
+            - odoo-postgresql
 
 volumes:
 
-    odoo-web-data:
+    odoo-postgresql:
 
-    odoo-db-data:
-
-secrets:
-
-    postgresql_password:
-
-        file: odoo_pg_pass
+    odoo:
