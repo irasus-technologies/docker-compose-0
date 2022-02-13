@@ -20,7 +20,7 @@ services:
         container_name: mysql
 
         volumes:
-            - "/tmp/mysql:/config"
+            - "/tmp/mysql:/var/lib/mysql"
 
         image: mysql:5.7
 
