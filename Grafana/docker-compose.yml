@@ -1,0 +1,59 @@
+version: "3"
+
+networks:
+
+    khyber:
+
+        external: false
+
+        # driver: bridge
+
+volumes:
+
+    grafana:
+
+        external: false
+
+services:
+
+    nginx:
+
+        restart: unless-stopped
+
+        # network_mode: host
+
+        networks:
+            - khyber
+
+        ports:
+            - "80:80"
+
+        container_name: nginx
+
+        volumes:
+            - "./nginx.conf:/etc/nginx/nginx.conf"
+            - "./grafana.conf:/etc/nginx/conf.d/grafana.conf"
+
+        image: nginx:1.21.6
+
+    grafana:
+
+        restart: unless-stopped
+
+        # network_mode: host
+
+        networks:
+            - khyber
+
+        ports:
+            - "3000:3000"
+
+        container_name: grafana
+
+        volumes:
+            - "grafana:/var/lib/grafana"
+
+        image: grafana/grafana-oss:8.3.6
+
+        # env_file:
+            # - grafana.env
