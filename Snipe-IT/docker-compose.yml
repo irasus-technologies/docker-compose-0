@@ -20,7 +20,7 @@ services:
         container_name: mariadb
 
         volumes:
-            - "/tmp/mysql:/config"
+            - "/tmp/mysql:/var/lib/mysql"
 
         image: mariadb:10.3.32
 
