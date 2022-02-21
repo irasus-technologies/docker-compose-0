@@ -14,7 +14,7 @@ services:
         volumes:
             - "odoo-postgresql:/var/lib/postgresql/data"
 
-        image: postgres:12
+        image: postgres:14
 
         env_file:
             - postgresql.env
